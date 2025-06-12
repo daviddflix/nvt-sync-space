@@ -10,9 +10,12 @@
     "seed": "ts-node src/shared/database/seeds/seed.ts",
     "migrate": "node-pg-migrate up",
     "migrate:down": "node-pg-migrate down",
-    "migrate:create": "node-pg-migrate create"
+    "migrate:create": "node-pg-migrate create",
+    "swagger-jsdoc": "^6.2.8",
+    "winston": "^3.9.0"
   },
-  "keywords": [],
+  "@types/swagger-ui-express": "^4.1.3",
+  "@types/winston": "^2.4.4",
   "author": "",
   "license": "ISC",
   "type": "commonjs",

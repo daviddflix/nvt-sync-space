@@ -2,11 +2,13 @@ import express from 'express';
 import authRoutes from './contexts/auth/presentation/routes';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import { requestLogger } from './shared/middleware/logger';
+import { logger } from './shared/logger';
 import config from './config';
 
 const app = express();
 app.use(express.json());
-
+app.use(requestLogger);
 const swaggerSpec = swaggerJsdoc({
   definition: { 
     openapi: '3.0.0', 
