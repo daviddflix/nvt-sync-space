@@ -105,7 +105,8 @@ collaborative-platform/
 │   │       └── infrastructure/
 │   ├── shared/                     # Shared utilities
 │   │   ├── database/
-│   │   │   └── connection.ts
+│   │   │   ├── connection.ts
+│   │   │   └── seeds/              # Database seeding system
 │   │   ├── middleware/             # Auth, CORS, validation
 │   │   ├── types/                  # Common TypeScript types
 │   │   └── utils/                  # Helper functions
@@ -141,6 +142,8 @@ collaborative-platform/
 - Infrastructure layer handles database constraints
 
 ### Data Access
+- **Shared PostgreSQL database** with logical context boundaries
 - Repository pattern with interface segregation
 - Raw SQL with prepared statements
-- Migration-driven schema evolution 
+- Migration-driven schema evolution
+- **No cross-context database queries** - contexts communicate via APIs 

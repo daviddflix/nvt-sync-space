@@ -33,12 +33,14 @@
 **Deliverables:**
 - Docker Compose setup with PostgreSQL
 - Project structure with DDD layers
+- Database seeding system with default data
 - Auth & User Context implementation
 - User registration and login flows
 - JWT token lifecycle
 - Basic test foundation
 
 **Success Criteria:**
+- Default admin user and organization seeded
 - Users can register and authenticate
 - JWT tokens working
 - Test suite running in Docker
@@ -51,8 +53,10 @@
 - User-organization relationships
 - Basic role management (admin/member)
 - Organization CRUD operations
+- Seed default organization with admin membership
 
 **Success Criteria:**
+- Default organization accessible to admin user
 - Organizations can be created
 - User membership working
 - Admin role permissions functional
@@ -66,8 +70,10 @@
 - Channels (public/private)
 - Real-time messaging
 - Message reactions
+- Seed default channels (#general, #announcements)
 
 **Success Criteria:**
+- Default channels available in default organization
 - Real-time messaging functional
 - Public/private channels working
 - WebSocket events delivered
@@ -82,8 +88,10 @@
 - Issue lifecycle management
 - Issue comments
 - Issue movement between columns
+- Seed default board ("Getting Started") with sample issues
 
 **Success Criteria:**
+- Default board with sample workflow available
 - Boards can be created with issues
 - Issue status transitions working
 - Comments functional

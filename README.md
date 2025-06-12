@@ -27,7 +27,7 @@ We are building a minimal but functional MVP using Domain-Driven Design (DDD) wi
 
 ## 🏗️ Tech Stack
 
-- **Database:** PostgreSQL
+- **Database:** PostgreSQL (shared across all contexts)
 - **Language:** Node.js with TypeScript
 - **Web Framework:** Express.js
 - **Real-time:** Socket.io WebSocket
@@ -82,6 +82,20 @@ We are building a minimal but functional MVP using Domain-Driven Design (DDD) wi
 - **WebSocket Tests:** Real-time messaging functionality
 - **Docker Test DB:** Automated setup with fresh state per test suite
 
+## 🌱 Database Seeding
+
+**Shared Seeding System** - Each context provides default data:
+- **Default Admin User:** `admin@platform.com` (password: `admin123`)
+- **Default Organization:** "Platform Workspace" with admin membership
+- **Default Channels:** #general and #announcements (auto-joined)
+- **Sample Project Board:** "Getting Started" with demo issues and workflow
+- **Welcome Notification:** Onboarding message for new users
+
+**Benefits:**
+- Immediate usable environment after setup
+- Consistent dev/test data across team
+- Example data showing all features
+
 ## 🐳 Docker Setup
 
 ```yaml
@@ -121,8 +135,14 @@ services:
 git clone <repo>
 cd collaborative-platform
 
-# Start with Docker
+# Start with Docker (includes database seeding)
 docker-compose up --build
+
+# Database will be seeded with:
+# - Default admin user: admin@platform.com
+# - Default organization: "Platform Workspace"
+# - Default channels: #general, #announcements
+# - Sample project board with demo issues
 
 # Run tests
 docker-compose run app npm test

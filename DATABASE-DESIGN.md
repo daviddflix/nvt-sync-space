@@ -2,13 +2,47 @@
 
 ## Schema Overview
 
-The database follows a strict Domain-Driven Design approach with clear bounded contexts. Each context maintains its own tables with well-defined relationships and constraints.
+**Shared Database Architecture:** Single PostgreSQL database with logical bounded context separation. Each context owns its tables and cannot directly access other contexts' tables through repository interfaces.
+
+**Logical Boundaries:** While physically shared, contexts maintain strict separation:
+- Each context has its own repository interfaces
+- No cross-context database queries allowed
+- Inter-context communication happens via API calls
+- Foreign key relationships exist but are not accessed directly across contexts
 
 ## Migration Strategy
 
 Using `node-pg-migrate` for simple schema evolution:
 - Sequential numbered migrations
 - Foreign key constraints enforced at database level
+
+## Database Seeding Strategy
+
+Each context provides default seed data for development and testing:
+
+### Seed Data per Context
+- **Auth Context:** Default admin user (admin@platform.com)
+- **Organization Context:** Default organization ("Platform Workspace")
+- **Chat Context:** Default channels (#general, #announcements)
+- **Project Context:** Default board ("Getting Started")
+- **Notification Context:** Welcome notification
+
+### Shared Seeding System
+- Centralized seeding in `shared/database/seeds/`
+- Idempotent seed scripts (safe to run multiple times)
+- Environment-aware seeding (dev/test/prod)
+- Order-dependent execution (users → orgs → channels → boards)
+
+### Seed Files Structure
+```
+shared/database/seeds/
+├── 001_seed_users.sql           # Default admin user
+├── 002_seed_organizations.sql   # Default organization
+├── 003_seed_user_organizations.sql # Admin membership
+├── 004_seed_channels.sql        # Default channels
+├── 005_seed_boards.sql          # Default board with columns
+└── seed.js                      # Node.js seeding orchestrator
+```
 
 ## Bounded Context Schemas
 
