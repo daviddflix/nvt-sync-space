@@ -1,11 +1,11 @@
-const { Pool } = require('pg');
-const fs = require('fs');
-const path = require('path');
-require('dotenv').config();
+import { Pool } from 'pg';
+import * as fs from 'fs';
+import * as path from 'path';
+import 'dotenv/config';
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
-async function runSeeds() {
+async function runSeeds(): Promise<void> {
   const seedDir = __dirname;
   const files = fs.readdirSync(seedDir)
     .filter(f => f.match(/^\d+_.*\.sql$/))

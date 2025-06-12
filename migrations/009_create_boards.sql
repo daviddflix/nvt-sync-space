@@ -5,7 +5,9 @@ CREATE TABLE boards (
   description TEXT,
   created_by UUID NOT NULL REFERENCES users(id),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+
+  UNIQUE(organization_id, name)
 );
 
 CREATE INDEX idx_boards_org ON boards(organization_id);

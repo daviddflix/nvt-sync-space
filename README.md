@@ -140,6 +140,9 @@ cd collaborative-platform
 # Install dependencies
 npm install
 
+# Create local PostgreSQL database (if not using Docker)
+createdb app_test  # Requires PostgreSQL installed locally
+
 # Configure environment
 cp .env.example .env
 
