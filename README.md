@@ -1,67 +1,88 @@
-## Title
+# Collaborative Platform MVP
 
-DDD-Based MVP Database Implementation Plan
+> A Slack/Monday.com hybrid workspace combining real-time chat with lightweight project management for early adopters.
 
----
+## 📚 Documentation
 
-## 1. Overview
+- [**Architecture**](./ARCHITECTURE.md) - Technical design, patterns, and infrastructure
+- [**Domain Model**](./DOMAIN-MODEL.md) - Business rules and bounded contexts  
+- [**Features**](./FEATURES.md) - Detailed requirements and user stories
+- [**Database Design**](./DATABASE-DESIGN.md) - Schema, migrations, and data relationships
+- [**API Design**](./API-DESIGN.md) - REST endpoints and request/response formats
+- [**Implementation Plan**](./IMPLEMENTATION-PLAN.md) - Development roadmap and testing strategy
 
-We will design and implement the core database layer of our Slack/Monday/Jira–style MVP using a strict Domain-Driven Design (DDD) approach. Each bounded context (module) will encapsulate its own data model, business logic, and persistence, with comprehensive unit and integration testing. The plan covers setup, design, testing, and deployment via Docker Compose.
+## 🎯 Project Overview
 
----
+We are building a minimal but functional MVP using Domain-Driven Design (DDD) with a focus on real-time messaging and lightweight project management.
 
-## 2. Tech Stack & Libraries
+**Target Audience:** Early adopters needing combined chat and lightweight project management in a single workspace.
 
-* **Database:** PostgreSQL
-* **Language:** Node.js with TypeScript
-* **ORM / Query:** raw SQL via `pg` + `sql-template-strings`
-* **Migrations:** `node-pg-migrate`
-* **Validation:** `zod`
-* **WebSockets:** `socket.io` (for eventual integration)
-* **Testing:** `jest` (unit), `supertest` (integration)
-* **Docker:** `docker`, `docker-compose`
+**MVP Features:**
+- User Registration & Auth
+- Organization Management  
+- Real-Time Chat Channels (WebSocket)
+- Kanban Boards & Issues
+- File Attachments
+- In-App Notifications
 
----
+## 🏗️ Tech Stack
 
-## 3. Architecture & Design Patterns
+- **Database:** PostgreSQL
+- **Language:** Node.js with TypeScript
+- **Web Framework:** Express.js
+- **Real-time:** Socket.io WebSocket
+- **Validation:** Zod schemas
+- **Testing:** Jest + Supertest
+- **Deployment:** Docker Compose
 
-* **Layered DDD Architecture**:
+## 🚀 Architecture
 
-  * **Domain Layer:** Entities, Value Objects, Aggregates, Repositories Interfaces, Domain Services
-  * **Application Layer:** Use Cases / Services, orchestrating Domain logic
-  * **Infrastructure Layer:** SQL Migrations, Repository Implementations, DB Client, Docker Compose
-* **Building Blocks:**
+**Layered DDD Architecture:**
+- **Presentation Layer:** Controllers, Routes, HTTP handlers, Middleware
+- **Application Layer:** Use Cases, DTOs (contracts), orchestrating Domain logic
+- **Domain Layer:** Entities, Value Objects, Repositories, Domain Services
+- **Infrastructure Layer:** Repository Implementations, Database Client, External Services
 
-  * **Entities & Value Objects:** Immutable properties, encapsulated invariants
-  * **Repositories:** Interfaces in Domain, SQL-based implementations in Infrastructure
-  * **Factories:** For complex aggregate creation
-  * **Domain Events:** (Stubbed for future) patterns for integration with real-time components
+**Bounded Contexts:**
+1. **Auth & User** - Authentication and user management
+2. **Organization** - Workspace and membership management
+3. **Chat** - Real-time messaging with WebSocket
+4. **Project** - Kanban boards and issue tracking
+5. **Attachment** - File upload and management
+6. **Notification** - User alerts and notifications
 
----
+## 📋 Development Roadmap
 
-## 4. Bounded Contexts & Clear Boundaries
+### Sprint 1: Foundation & Auth (Weeks 1-2)
+- Docker setup + Auth Context
+- User registration/login with JWT
 
-1. **Auth & User Context**
-2. **Organization Context**
-3. **Chat Context** (Channels, Messages, Reactions)
-4. **Project Context** (Boards, Columns, Issues, Comments)
-5. **Attachment Context**
-6. **Notification Context**
+### Sprint 2: Organization Management (Weeks 3-4)
+- Organization CRUD + membership
+- Admin/member roles
 
-Each context lives in its own folder, with independent schema, domain models, services, tests, and migrations.
+### Sprint 3: Real-Time Chat (Weeks 5-6)
+- WebSocket integration
+- Channels + real-time messaging
 
----
+### Sprint 4: Project Management (Weeks 7-8)
+- Kanban boards with fixed columns
+- Issue lifecycle management
 
-## 5. Testing Strategy & Libraries
+### Sprint 5: Attachments & Notifications (Weeks 9-10)
+- File upload + basic notifications
 
-* **Unit Tests (Jest):** Domain logic, Value Object validations, Repository stubs
-* **Integration Tests (Supertest + Test DB):** End-to-end flows against a running Postgres container
-* **Test DB Setup:** Dockerized Postgres instance spun up before integration suite; migrations run automatically
-* **Coverage Goal:** ≥ 90% on domain and application layers
+### Sprint 6: Testing & Polish (Weeks 11-12)
+- Complete test suite + production readiness
 
----
+## 🧪 Testing Strategy
 
-## 6. Dockerization (Docker Compose)
+- **Unit Tests:** Domain logic + business rules (≥90% coverage)
+- **Integration Tests:** API endpoints + database integration
+- **WebSocket Tests:** Real-time messaging functionality
+- **Docker Test DB:** Automated setup with fresh state per test suite
+
+## 🐳 Docker Setup
 
 ```yaml
 version: '3.8'
@@ -72,138 +93,41 @@ services:
       POSTGRES_DB: app_test
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
   app:
     build: .
     depends_on:
       - db
     environment:
       DATABASE_URL: postgres://user:pass@db:5432/app_test
-    volumes:
-      - .:/usr/src/app
-    command: npm run test:integration
-volumes:
-  db_data:
 ```
 
----
+## 🎯 Success Metrics
 
-## 7. Feature List & Target Audience
+**Technical:**
+- ≥90% test coverage on core logic
+- Real-time WebSocket messaging functional
+- Docker deployment ready
 
-* **Target Audience:** Early adopters needing combined chat and lightweight project management in a single workspace.
-* **MVP Features:**
-
-  1. **User Registration & Auth**
-  2. **Organization Management**
-  3. **Real-Time Chat Channels**
-  4. **Kanban Boards & Issues**
-  5. **Attachments**
-  6. **In-App Notifications**
+**Business:**
+- All MVP features working end-to-end
+- User registration → chat → project management flow complete
 
 ---
 
-## 8. Feature Details
+## Quick Start
 
-### 8.1 User Registration & Auth
+```bash
+# Clone and setup
+git clone <repo>
+cd collaborative-platform
 
-* **Overview:** Sign-up, login, JWT issuance, refresh tokens.
-* **Validation:** Email format, password strength, unique email.
-* **Business Rules:** One active refresh token per session; revoke on logout.
-* **User Flows:**
+# Start with Docker
+docker-compose up --build
 
-  1. User submits sign-up form → Domain Service validates & creates User + Organization membership.
-  2. Login → verify credentials → issue access & refresh tokens.
-* **Technical Details:**
+# Run tests
+docker-compose run app npm test
+```
 
-  * `User` Entity, `IUserRepository`, `UserRepositoryPg`.
-  * Migrations: `users`, `refresh_tokens`.
-  * Zod schemas for DTOs.
-  * Tests: unit for password hashing & token logic; integration for full sign-up/login.
+## Current Status
 
-### 8.2 Organization Management
-
-* **Overview:** Create and manage workspaces.
-* **Validation:** Unique organization name.
-* **Business Rules:** First user becomes Org Admin.
-* **User Flows:**
-
-  1. Admin creates org → persist `Organization` + `UserOrganization`.
-* **Technical Details:**
-
-  * `Organization` Entity, Repository interface and Pg implementation.
-  * Migrations: `organizations`, `user_organizations`.
-  * Tests: unit for role assignment; integration for org creation.
-
-### 8.3 Real-Time Chat Channels
-
-* **Overview:** Public/private channels, membership, messaging.
-* **Validation:** Unique channel name per org, content length.
-* **Business Rules:** Auto-add all org members to public channels.
-* **User Flows:**
-
-  1. Create channel → persist `Channel` + auto seed `ChannelMember`.
-  2. Send message → create `Message` record.
-* **Technical Details:**
-
-  * Entities: `Channel`, `Message`, `Reaction`.
-  * Migrations: `channels`, `channel_members`, `messages`, `message_reactions`.
-  * Tests: unit for auto-membership logic; integration for chat flows.
-
-### 8.4 Kanban Boards & Issues
-
-* **Overview:** Boards with Backlog/In Progress/Done, issue tracking.
-* **Validation:** Column names fixed; title required.
-* **Business Rules:** Issues cannot move to non-existent columns.
-* **User Flows:**
-
-  1. Create board → seed columns.
-  2. Create issue → assign to column.
-  3. Move issue → update `column_id` + timestamp.
-* **Technical Details:**
-
-  * Entities: `Board`, `Column`, `Issue`, `IssueComment`.
-  * Migrations: `boards`, `columns`, `issues`, `issue_comments`.
-  * Tests: unit for seed logic; integration for issue lifecycle.
-
-### 8.5 Attachments
-
-* **Overview:** File upload metadata linking to messages or comments.
-* **Validation:** Size ≤ 10 MB, one parent reference.
-* **Business Rules:** Max 5 attachments per parent enforced in service.
-* **User Flows:**
-
-  1. Upload file → persist `Attachment`, store file locally.
-* **Technical Details:**
-
-  * Entity: `Attachment`.
-  * Migration: `attachments`.
-  * Tests: unit for parent-check logic; integration for file flow.
-
-### 8.6 In-App Notifications
-
-* **Overview:** Alerts for mentions, assignments, status changes.
-* **Validation:** Valid notification type.
-* **Business Rules:** Only unread until marked read.
-* **User Flows:**
-
-  1. Trigger event → create `Notification` record + socket emit.
-* **Technical Details:**
-
-  * Entity: `Notification`.
-  * Migration: `notifications`.
-  * Tests: unit for type validation; integration for end-to-end alert delivery.
-
----
-
-## 9. Timeline & Sprints
-
-* **Sprint 1:** Setup, Auth & Org Context
-* **Sprint 2:** Chat Context
-* **Sprint 3:** Project Context
-* **Sprint 4:** Attachments & Notifications
-* **Sprint 5:** Testing, Docker Compose polish, Documentation
-
-*End of Plan.*
+**Planning Phase Complete** - Ready for Sprint 1 implementation with simplified, minimal approach focused on core functionality.
