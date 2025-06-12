@@ -9,7 +9,7 @@
     "dev": "nodemon --watch \"src/**/*.ts\" --exec ts-node src/server.ts",
     "test": "jest",
     "migrate": "node-pg-migrate up",
-    "seed": "node shared/database/seeds/seed.js"
+    "seed": "node src/shared/database/seeds/seed.js"
   },
   "keywords": [],
   "author": "",

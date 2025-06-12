@@ -28,14 +28,14 @@ Each context provides default seed data for development and testing:
 - **Notification Context:** Welcome notification
 
 ### Shared Seeding System
-- Centralized seeding in `shared/database/seeds/`
+- Centralized seeding in `src/shared/database/seeds/`
 - Idempotent seed scripts (safe to run multiple times)
 - Environment-aware seeding (dev/test/prod)
 - Order-dependent execution (users → orgs → channels → boards)
 
 ### Seed Files Structure
 ```
-shared/database/seeds/
+src/shared/database/seeds/
 ├── 001_seed_users.sql           # Default admin user
 ├── 002_seed_organizations.sql   # Default organization
 ├── 003_seed_user_organizations.sql # Admin membership
