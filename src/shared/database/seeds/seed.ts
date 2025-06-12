@@ -3,11 +3,12 @@ import * as fs from 'fs';
 import * as path from 'path';
 import 'dotenv/config';
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const defaultPool = new Pool({ connectionString: process.env.DATABASE_URL });
 
-async function runSeeds(): Promise<void> {
+export async function runSeeds(pool: Pool = defaultPool): Promise<void> {
   const seedDir = __dirname;
-  const files = fs.readdirSync(seedDir)
+  const files = fs
+    .readdirSync(seedDir)
     .filter(f => f.match(/^\d+_.*\.sql$/))
     .sort();
 
@@ -18,12 +19,16 @@ async function runSeeds(): Promise<void> {
   }
 }
 
-runSeeds()
-  .then(() => {
-    console.log('Seeding complete'); // eslint-disable-line no-console
-    return pool.end();
-  })
-  .catch(err => {
-    console.error(err); // eslint-disable-line no-console
-    pool.end().then(() => process.exit(1));
-  });
+if (require.main === module) {
+  runSeeds()
+    .then(() => {
+      console.log('Seeding complete'); // eslint-disable-line no-console
+      return defaultPool.end();
+    })
+    .catch(err => {
+      console.error(err); // eslint-disable-line no-console
+      defaultPool.end().then(() => process.exit(1));
+    });
+}
+
+export default runSeeds;
