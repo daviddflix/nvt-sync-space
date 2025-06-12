@@ -140,8 +140,17 @@ cd collaborative-platform
 # Install dependencies
 npm install
 
+# Create local PostgreSQL database (if not using Docker)
+createdb app_test  # Requires PostgreSQL installed locally
+
 # Configure environment
 cp .env.example .env
+
+# Run database migrations
+npm run migrate
+
+# Seed default data
+npm run seed
 
 # Start development server
 npm run dev
@@ -150,8 +159,14 @@ npm run dev
 ### Docker Compose
 
 ```bash
-# Build and start containers (includes database seeding)
+# Build and start containers
 docker-compose up --build
+
+# Run database migrations
+docker-compose run app npm run migrate
+
+# Seed default data
+docker-compose run app npm run seed
 
 # Database will be seeded with:
 # - Default admin user: admin@platform.com
