@@ -6,9 +6,9 @@ export interface UserProps {
 }
 
 export class User implements UserProps {
-  id: string;
-  email: string;
-  passwordHash: string;
+  id!: string;
+  email!: string;
+  passwordHash!: string;
   refreshToken?: string;
 
   constructor(props: UserProps) {
