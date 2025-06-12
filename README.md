@@ -130,12 +130,27 @@ services:
 
 ## Quick Start
 
+### Local Development
+
 ```bash
 # Clone and setup
 git clone <repo>
 cd collaborative-platform
 
-# Start with Docker (includes database seeding)
+# Install dependencies
+npm install
+
+# Configure environment
+cp .env.example .env
+
+# Start development server
+npm run dev
+```
+
+### Docker Compose
+
+```bash
+# Build and start containers (includes database seeding)
 docker-compose up --build
 
 # Database will be seeded with:
@@ -144,7 +159,7 @@ docker-compose up --build
 # - Default channels: #general, #announcements
 # - Sample project board with demo issues
 
-# Run tests
+# Run tests inside the container
 docker-compose run app npm test
 ```
 
