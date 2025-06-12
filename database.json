@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "driver": "pg",
+    "user": "postgres",
+    "password": "postgres",
+    "host": "localhost",
+    "database": "nvt_sync",
+    "port": 5432,
+    "migrations-dir": "src/shared/database/migrations"
+  },
+  "test": {
+    "driver": "pg",
+    "user": "postgres",
+    "password": "postgres",
+    "host": "localhost",
+    "database": "nvt_sync_test",
+    "port": 5432,
+    "migrations-dir": "src/shared/database/migrations"
+  }
+} 

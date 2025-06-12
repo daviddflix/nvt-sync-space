@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import { logger } from '../logger';
 
-export function logger(req: Request, res: Response, next: NextFunction): void {
-  console.info(`${req.method} ${req.url}`);
+export function requestLogger(req: Request, _res: Response, next: NextFunction): void {
+  logger.info(`${req.method} ${req.url}`);
   next();
 }
