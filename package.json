@@ -7,7 +7,9 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "nodemon --watch \"src/**/*.ts\" --exec ts-node src/server.ts",
-    "test": "jest"
+    "test": "jest",
+    "migrate": "node-pg-migrate up",
+    "seed": "node shared/database/seeds/seed.js"
   },
   "keywords": [],
   "author": "",
@@ -35,6 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "prettier": "^3.2.4",
     "eslint-plugin-prettier": "^5.0.1",
-    "eslint-config-prettier": "^9.0.0"
+    "eslint-config-prettier": "^9.0.0",
+    "node-pg-migrate": "^7.0.0"
   }
 }
