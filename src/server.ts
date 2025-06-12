@@ -36,5 +36,6 @@ export default app;
 if (require.main === module) {
   app.listen(config.server.port, () => {
     console.log(`Server running on port ${config.server.port} in ${config.server.env} mode`); // eslint-disable-line no-console
+    logger.info(`Docs running on port http://localhost:${config.server.port}/docs |`);
   });
 }
