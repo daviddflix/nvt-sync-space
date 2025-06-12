@@ -4,12 +4,12 @@
 
 ## 📚 Documentation
 
-- [**Architecture**](./ARCHITECTURE.md) - Technical design, patterns, and infrastructure
-- [**Domain Model**](./DOMAIN-MODEL.md) - Business rules and bounded contexts  
-- [**Features**](./FEATURES.md) - Detailed requirements and user stories
-- [**Database Design**](./DATABASE-DESIGN.md) - Schema, migrations, and data relationships
-- [**API Design**](./API-DESIGN.md) - REST endpoints and request/response formats
-- [**Implementation Plan**](./IMPLEMENTATION-PLAN.md) - Development roadmap and testing strategy
+- [**Architecture**](./docs/ARCHITECTURE.md) - Technical design, patterns, and infrastructure
+- [**Domain Model**](./docs/DOMAIN-MODEL.md) - Business rules and bounded contexts  
+- [**Features**](./docs/FEATURES.md) - Detailed requirements and user stories
+- [**Database Design**](./docs/DATABASE-DESIGN.md) - Schema, migrations, and data relationships
+- [**API Design**](./docs/API-DESIGN.md) - REST endpoints and request/response formats
+- [**Implementation Plan**](./docs/IMPLEMENTATION-PLAN.md) - Development roadmap and testing strategy
 
 ## 🎯 Project Overview
 
